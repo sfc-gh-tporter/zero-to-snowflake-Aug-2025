@@ -139,8 +139,12 @@ GRANT SELECT ON ALL TABLES IN SCHEMA raw_customer TO ROLE tb_data_steward;
 GRANT ALL ON SCHEMA governance TO ROLE tb_data_steward;
 GRANT ALL ON ALL TABLES IN SCHEMA governance TO ROLE tb_data_steward;
 
--- In order to use our new role, we also need to grant the role to the current user
-GRANT ROLE tb_data_steward TO USER USER;
+/*
+    In order to use our new role, we also need to grant the role to the current user. Run the next two queries 
+    to grant the current user the privilege to use the new data steward role.
+*/
+SET my_user = CURRENT_USER();
+GRANT ROLE tb_data_steward TO USER IDENTIFIER($my_user);
 
 /*
     Finally, run the query below use our newly created role!
