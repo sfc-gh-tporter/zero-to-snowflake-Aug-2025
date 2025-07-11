@@ -19,9 +19,9 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_101_v2_aisql","v
     to gain insights from customer reviews, so let's set our context appropriately.
 */
 
-USE ROLE tb_data_engineer;
+USE ROLE tb_analyst;
 USE DATABASE tb_101;
-USE WAREHOUSE tb_de_wh;
+USE WAREHOUSE tb_analyst_wh;
 
 /* 1. Sentiment Analysis at Scale
     ***************************************************************

@@ -17,8 +17,8 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_101_v2_copilot",
     ***************************************************************/
 
 -- before we start, we will set our context
-USE ROLE tb_data_engineer;
-USE WAREHOUSE tb_de_wh;
+USE ROLE tb_analyst;
+USE WAREHOUSE tb_analyst_wh;
 USE DATABASE tb_101;
 USE SCHEMA harmonized;
 
