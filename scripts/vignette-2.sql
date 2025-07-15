@@ -13,7 +13,7 @@ Simple Data Pipeline
 
 ****************************************************************************************************/
 
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "data_pipeline"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "data_pipeline"}}';
 
 /*
     We will assume the role of a TastyBytes data engineer with the intention of creating a data pipeline with raw menu data,
@@ -91,7 +91,7 @@ SELECT menu_item_health_metrics_obj FROM raw_pos.menu_staging;
 /*
     This query uses special syntax to navigate the data's internal, JSON-like structure. 
     The colon operator (:) accesses data by its key name and square brackets ([]) select an element from an array by its numerical position. 
-    These operators are often chained together to extract the ingredients list from the nested object.
+    We can then chain these operators together to extract the ingredients list from the nested object.
     
     Elements retrieved from VARIANT objects remain VARIANT type. 
     Casting these elements to their known data types improves query performance and enhances data quality.
@@ -215,7 +215,7 @@ WHERE ingredient_name IN ('French Baguette', 'Pickled Daikon');
 /* 4. Simple Pipeline with Dynamic Tables
 
     Now let's create an ingredient to menu lookup dynamic table. This will let us see which menu items 
-    use specific ingredients. THen we can determine which trucks need which ingredients and how many.
+    use specific ingredients. Then we can determine which trucks need which ingredients and how many.
     Since this table is also a dynamic table, it will automatically refresh should any new ingredients be used 
     in any menu item that is added to the menu staging table.
 */

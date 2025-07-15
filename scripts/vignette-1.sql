@@ -16,7 +16,7 @@ Getting Started with Snowflake
 ****************************************************************************************************/
 
 -- Before we start, run this query to set the session query tag.
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "getting_started_with_snowflake"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "getting_started_with_snowflake"}}';
 
 -- We'll begin by setting our Worksheet context. We will set our database, schema and role.
 

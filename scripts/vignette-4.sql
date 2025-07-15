@@ -15,7 +15,7 @@ Governance with Horizon
 ****************************************************************************************************/
 
 -- Set the session query tag
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "governance_with_horizon"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "governance_with_horizon"}}';
 
 -- First, let's set our Worksheet context
 USE ROLE useradmin;
@@ -457,7 +457,7 @@ ALTER TABLE raw_pos.order_detail
 
     The Trust Center enables automatic checks to evaluate and monitor security risks on your account with the use 
     of scanners. Scanners are scheduled background processes that check your account for security risks and violations, 
-    then provice recommended actions based on its findings. They are often grouped together into scanner packages. 
+    then provide recommended actions based on its findings. They are often grouped together into scanner packages. 
     
     Common use cases for the Trust Center are:
         - Ensuring Multi-Factor Authentication is enabled for users
