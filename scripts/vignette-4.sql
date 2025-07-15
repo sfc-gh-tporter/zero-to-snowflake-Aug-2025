@@ -15,7 +15,7 @@ Governance with Horizon
 ****************************************************************************************************/
 
 -- Set the session query tag
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_101_v2","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "governance_with_horizon"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "governance_with_horizon"}}';
 
 -- First, let's set our Worksheet context
 USE ROLE useradmin;

@@ -4,7 +4,7 @@ Version:      v1
 Copyright(c): 2025 Snowflake Inc. All rights reserved.
 ****************************************************************************************************/
 
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_101_v2_copilot","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "snowflake_copilot"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "snowflake_copilot"}}';
 
 /*
     We will assume the role of a TastyBytes data analyst with the intention of leveraging Snowflake Copilot 

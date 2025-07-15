@@ -13,7 +13,7 @@ Simple Data Pipeline
 
 ****************************************************************************************************/
 
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_101_v2","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "data_pipeline"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":0, "source":"tastybytes", "vignette": "data_pipeline"}}';
 
 /*
     We will assume the role of a TastyBytes data engineer with the intention of creating a data pipeline with raw menu data,
