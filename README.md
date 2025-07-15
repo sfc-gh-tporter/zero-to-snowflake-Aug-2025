@@ -4,4 +4,4 @@ This guide explores Snowflake's core capabilities, starting with foundational fe
 
 ## Step-By-Step Guide
 
-For prerequisites, environment setup, step-by-step guide and instructions, please refer to the [QuickStart Guide]().
+For prerequisites, environment setup, step-by-step guide and instructions, please refer to the [QuickStart Guide](https://quickstarts.snowflake.com/guide/zero_to_snowflake/index.html?index=..%2F..index#0).
