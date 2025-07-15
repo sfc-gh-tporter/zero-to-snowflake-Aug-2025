@@ -1,3 +1,9 @@
+/***************************************************************************************************       
+Asset:        Zero to Snowflake - Setup
+Version:      v1     
+Copyright(c): 2025 Snowflake Inc. All rights reserved.
+****************************************************************************************************/
+
 USE ROLE sysadmin;
 
 -- assign Query Tag to Session 
