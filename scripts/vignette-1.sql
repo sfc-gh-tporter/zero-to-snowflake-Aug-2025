@@ -79,7 +79,7 @@ CREATE OR REPLACE WAREHOUSE my_wh
     MAX_CLUSTER_COUNT = 2
     SCALING_POLICY = 'standard'
     AUTO_SUSPEND = 60
-    INITIALLY_SUSPENDED = true,
+    INITIALLY_SUSPENDED = true
     AUTO_RESUME = false;
 
 /*
@@ -248,7 +248,7 @@ GROUP BY make
 ORDER BY make ASC;
 
 /*
-    After running the query above, we notice a problem in our dataset. Some trucks' makes are 'Ford' and some 'Ford_',
+    After running the query above, we notice a problem in our dataset. Some trucks' makes are 'Ford' and some are 'Ford_',
     giving us two different counts for the same truck manufacturer.
 */
 
