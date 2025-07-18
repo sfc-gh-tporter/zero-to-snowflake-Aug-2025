@@ -195,9 +195,4 @@ GROUP BY
     customer voices into comprehensive business intelligence—systematic, scalable, and immediately actionable. 
     What once required individual review analysis now processes thousands of reviews in seconds, providing both the 
     emotional context and specific details crucial for data-driven operational improvements.
-
-    As our analysis grows in sophistication, combining multiple AI functions in complex queries can become 
-    challenging. This is precisely where Snowflake Copilot offers powerful assistance. Let's explore how 
-    Copilot can help us create complex queries using natural language and significantly accelerate our work, 
-    empowering us to build even more intricate analytical workflows with ease.
 ****************************************************************************************************/
