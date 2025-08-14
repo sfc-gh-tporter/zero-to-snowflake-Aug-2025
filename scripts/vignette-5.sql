@@ -16,7 +16,7 @@ Apps & Collaboration
 ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "apps_and_collaboration"}}';
 
 -- Now, set the Worksheet context
-USE DATABASE tb_101;
+USE DATABASE zero_to_snowflake;
 USE ROLE accountadmin;
 USE WAREHOUSE tb_de_wh;
 

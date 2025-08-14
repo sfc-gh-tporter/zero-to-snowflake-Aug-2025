@@ -19,7 +19,7 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{
 -- before we start, we will set our context
 USE ROLE tb_analyst;
 USE WAREHOUSE tb_analyst_wh;
-USE DATABASE tb_101;
+USE DATABASE zero_to_snowflake;
 USE SCHEMA harmonized;
 
 /* 2. Requirement Translation with Copilot

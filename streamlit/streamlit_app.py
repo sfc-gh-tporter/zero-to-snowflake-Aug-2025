@@ -32,7 +32,7 @@ def load_data():
     # Use the active session to reference a table in Snowflake and convert it to a Pandas DataFrame.
     # Note: The original variable name 'germany_sales_df' was potentially confusing given the context.
 
-    japan_sales_df = session.table("tb_101.analytics.japan_menu_item_sales_feb_2022").to_pandas()
+    japan_sales_df = session.table("zero_to_snowflake.analytics.japan_menu_item_sales_feb_2022").to_pandas()
     return japan_sales_df
 
 # Call the function to load the data. Thanks to caching, this will be fast after the first run. 

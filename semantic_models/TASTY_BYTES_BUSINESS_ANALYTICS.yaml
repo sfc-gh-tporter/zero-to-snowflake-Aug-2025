@@ -9,7 +9,7 @@ tables:
       - customer_metrics
       - customer_info
     base_table:
-      database: TB_101
+      database: ZERO_TO_SNOWFLAKE
       schema: SEMANTIC_LAYER
       table: CUSTOMER_LOYALTY_METRICS_V
     primary_key:
@@ -273,7 +273,7 @@ tables:
       - purchases
       - order_data
     base_table:
-      database: TB_101
+      database: ZERO_TO_SNOWFLAKE
       schema: SEMANTIC_LAYER
       table: ORDERS_V
     dimensions:

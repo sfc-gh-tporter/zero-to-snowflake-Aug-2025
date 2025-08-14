@@ -19,7 +19,7 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{
 
 -- First, let's set our Worksheet context
 USE ROLE useradmin;
-USE DATABASE tb_101;
+USE DATABASE zero_to_snowflake;
 USE WAREHOUSE tb_dev_wh;
 
 /*  1. Introduction to Roles and Access Control    
@@ -119,8 +119,8 @@ GRANT OPERATE, USAGE ON WAREHOUSE tb_dev_wh TO ROLE tb_data_steward;
       - ALL: Grants all privileges, except OWNERSHIP, on a database.
 */
 
-GRANT USAGE ON DATABASE tb_101 TO ROLE tb_data_steward;
-GRANT USAGE ON ALL SCHEMAS IN DATABASE tb_101 TO ROLE tb_data_steward;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_data_steward;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_data_steward;
 
 /*
     Access to data within Snowflake tables and views is managed through the following privileges:
@@ -219,13 +219,13 @@ CREATE OR REPLACE SNOWFLAKE.DATA_PRIVACY.CLASSIFICATION_PROFILE
 CALL governance.tb_classification_profile!SET_TAG_MAP(
   {'column_tag_map':[
     {
-      'tag_name':'tb_101.governance.pii',
+      'tag_name':'zero_to_snowflake.governance.pii',
       'tag_value':'pii',
       'semantic_categories':['NAME', 'PHONE_NUMBER', 'POSTAL_CODE', 'DATE_OF_BIRTH', 'CITY', 'EMAIL']
     }]});
 
 -- Now call SYSTEM$CLASSIFY to automatically classify the customer_loyalty table with our classification profile.
-CALL SYSTEM$CLASSIFY('tb_101.raw_customer.customer_loyalty', 'tb_101.governance.tb_classification_profile');
+CALL SYSTEM$CLASSIFY('zero_to_snowflake.raw_customer.customer_loyalty', 'zero_to_snowflake.governance.tb_classification_profile');
 
 /*
     Run the next query to see the results of the auto classification and tagging. We'll pull metadata from the 

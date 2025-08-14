@@ -20,7 +20,7 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{
 
 -- We'll begin by setting our Worksheet context. We will set our database, schema and role.
 
-USE DATABASE tb_101;
+USE DATABASE zero_to_snowflake;
 USE ROLE accountadmin;
 
 /*   1. Virtual Warehouses & Settings 
@@ -412,7 +412,7 @@ CREATE OR REPLACE SNOWFLAKE.CORE.BUDGET my_budget()
     - Set the spending limit to 100
     - Enter the email you verified earlier
     - Click the '+ Tags & Resources' button to add a couple of resources
-    - Expand Databases, then TB_101, then check the box next to the ANALYTICS schema
+    - Expand Databases, then ZERO_TO_SNOWFLAKE, then check the box next to the ANALYTICS schema
     - Scroll down to and expand 'Warehouses'
     - Check the box for 'TB_DE_WH'
     - Click 'Done'

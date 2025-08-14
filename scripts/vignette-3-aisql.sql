@@ -20,7 +20,7 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{
 */
 
 USE ROLE tb_analyst;
-USE DATABASE tb_101;
+USE DATABASE zero_to_snowflake;
 USE WAREHOUSE tb_analyst_wh;
 
 /* 1. Sentiment Analysis at Scale

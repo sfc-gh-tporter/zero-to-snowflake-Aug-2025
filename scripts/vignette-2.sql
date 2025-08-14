@@ -19,7 +19,7 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{
     We will assume the role of a TastyBytes data engineer with the intention of creating a data pipeline with raw menu data,
     so let's set our context appropriately.
 */
-USE DATABASE tb_101;
+USE DATABASE zero_to_snowflake;
 USE ROLE tb_data_engineer;
 USE WAREHOUSE tb_de_wh;
 
@@ -335,7 +335,7 @@ ORDER BY total_ingredients_used DESC;
 
     To access the DAG:
     - Click the 'Data' button in the Navigation Menu to open the database screen
-    - Click the arrow '>' next to 'TB_101' to expand the database 
+    - Click the arrow '>' next to 'ZERO_TO_SNOWFLAKE' to expand the database 
     - Expand 'HARMONIZED' then expand 'Dynamic Tables'
     - Click the 'INGREDIENT' table
 */

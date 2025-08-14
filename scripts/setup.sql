@@ -13,29 +13,29 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{
  • database, schema and warehouse creation
 --*/
 
--- create tb_101 database
-CREATE OR REPLACE DATABASE tb_101;
+-- create zero_to_snowflake database
+CREATE OR REPLACE DATABASE zero_to_snowflake;
 
 -- create raw_pos schema
-CREATE OR REPLACE SCHEMA tb_101.raw_pos;
+CREATE OR REPLACE SCHEMA zero_to_snowflake.raw_pos;
 
 -- create raw_customer schema
-CREATE OR REPLACE SCHEMA tb_101.raw_customer;
+CREATE OR REPLACE SCHEMA zero_to_snowflake.raw_customer;
 
 -- create harmonized schema
-CREATE OR REPLACE SCHEMA tb_101.harmonized;
+CREATE OR REPLACE SCHEMA zero_to_snowflake.harmonized;
 
 -- create analytics schema
-CREATE OR REPLACE SCHEMA tb_101.analytics;
+CREATE OR REPLACE SCHEMA zero_to_snowflake.analytics;
 
 -- create governance schema
-CREATE OR REPLACE SCHEMA tb_101.governance;
+CREATE OR REPLACE SCHEMA zero_to_snowflake.governance;
 
 -- create raw_support
-CREATE OR REPLACE SCHEMA tb_101.raw_support;
+CREATE OR REPLACE SCHEMA zero_to_snowflake.raw_support;
 
 -- Create schema for the Semantic Layer
-CREATE OR REPLACE SCHEMA tb_101.semantic_layer
+CREATE OR REPLACE SCHEMA zero_to_snowflake.semantic_layer
 COMMENT = 'Schema for the business-friendly semantic layer, optimized for analytical consumption.';
 
 -- create warehouses
@@ -107,37 +107,37 @@ GRANT CREATE WAREHOUSE ON ACCOUNT TO ROLE tb_admin;
 
 USE ROLE securityadmin;
 
-GRANT USAGE ON DATABASE tb_101 TO ROLE tb_admin;
-GRANT USAGE ON DATABASE tb_101 TO ROLE tb_data_engineer;
-GRANT USAGE ON DATABASE tb_101 TO ROLE tb_dev;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_admin;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_data_engineer;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_dev;
 
-GRANT USAGE ON ALL SCHEMAS IN DATABASE tb_101 TO ROLE tb_admin;
-GRANT USAGE ON ALL SCHEMAS IN DATABASE tb_101 TO ROLE tb_data_engineer;
-GRANT USAGE ON ALL SCHEMAS IN DATABASE tb_101 TO ROLE tb_dev;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_admin;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_data_engineer;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_dev;
 
-GRANT ALL ON SCHEMA tb_101.raw_support TO ROLE tb_admin;
-GRANT ALL ON SCHEMA tb_101.raw_support TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA tb_101.raw_support TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE tb_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE tb_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE tb_dev;
 
-GRANT ALL ON SCHEMA tb_101.raw_pos TO ROLE tb_admin;
-GRANT ALL ON SCHEMA tb_101.raw_pos TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA tb_101.raw_pos TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_dev;
 
-GRANT ALL ON SCHEMA tb_101.harmonized TO ROLE tb_admin;
-GRANT ALL ON SCHEMA tb_101.harmonized TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA tb_101.harmonized TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE tb_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE tb_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE tb_dev;
 
-GRANT ALL ON SCHEMA tb_101.analytics TO ROLE tb_admin;
-GRANT ALL ON SCHEMA tb_101.analytics TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA tb_101.analytics TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE tb_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE tb_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE tb_dev;
 
-GRANT ALL ON SCHEMA tb_101.governance TO ROLE tb_admin;
-GRANT ALL ON SCHEMA tb_101.governance TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA tb_101.governance TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE tb_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE tb_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE tb_dev;
 
-GRANT ALL ON SCHEMA tb_101.semantic_layer TO ROLE tb_admin;
-GRANT ALL ON SCHEMA tb_101.semantic_layer TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA tb_101.semantic_layer TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_dev;
 
 -- warehouse grants
 GRANT OWNERSHIP ON WAREHOUSE tb_de_wh TO ROLE tb_admin COPY CURRENT GRANTS;
@@ -157,29 +157,29 @@ GRANT ALL ON WAREHOUSE tb_cortex_wh TO ROLE tb_data_engineer;
 GRANT ALL ON WAREHOUSE tb_cortex_wh TO ROLE tb_dev;
 
 -- future grants
-GRANT ALL ON FUTURE TABLES IN SCHEMA tb_101.raw_pos TO ROLE tb_admin;
-GRANT ALL ON FUTURE TABLES IN SCHEMA tb_101.raw_pos TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE TABLES IN SCHEMA tb_101.raw_pos TO ROLE tb_dev;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_admin;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_data_engineer;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_dev;
 
-GRANT ALL ON FUTURE TABLES IN SCHEMA tb_101.raw_customer TO ROLE tb_admin;
-GRANT ALL ON FUTURE TABLES IN SCHEMA tb_101.raw_customer TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE TABLES IN SCHEMA tb_101.raw_customer TO ROLE tb_dev;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE tb_admin;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE tb_data_engineer;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE tb_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.harmonized TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.harmonized TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.harmonized TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE tb_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE tb_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE tb_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.analytics TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.analytics TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.analytics TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE tb_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE tb_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE tb_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.governance TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.governance TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.governance TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE tb_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE tb_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE tb_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.semantic_layer TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.semantic_layer TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA tb_101.semantic_layer TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_dev;
 
 -- Apply Masking Policy Grants
 USE ROLE accountadmin;
@@ -196,7 +196,7 @@ GRANT OPERATE, USAGE ON WAREHOUSE tb_analyst_wh TO ROLE tb_analyst;
 
 -- Grants for cortex search service
 GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE TB_DEV;
-GRANT USAGE ON SCHEMA TB_101.HARMONIZED TO ROLE TB_DEV;
+GRANT USAGE ON SCHEMA ZERO_TO_SNOWFLAKE.HARMONIZED TO ROLE TB_DEV;
 GRANT USAGE ON WAREHOUSE TB_DE_WH TO ROLE TB_DEV;
 
 
@@ -208,21 +208,21 @@ USE WAREHOUSE tb_de_wh;
  • file format and stage creation
 --*/
 
-CREATE OR REPLACE FILE FORMAT tb_101.public.csv_ff 
+CREATE OR REPLACE FILE FORMAT zero_to_snowflake.public.csv_ff 
 type = 'csv';
 
-CREATE OR REPLACE STAGE tb_101.public.s3load
+CREATE OR REPLACE STAGE zero_to_snowflake.public.s3load
 COMMENT = 'Quickstarts S3 Stage Connection'
 url = 's3://sfquickstarts/frostbyte_tastybytes/'
-file_format = tb_101.public.csv_ff;
+file_format = zero_to_snowflake.public.csv_ff;
 
-CREATE OR REPLACE STAGE tb_101.public.truck_reviews_s3load
+CREATE OR REPLACE STAGE zero_to_snowflake.public.truck_reviews_s3load
 COMMENT = 'Truck Reviews Stage'
 url = 's3://sfquickstarts/tastybytes-voc/'
-file_format = tb_101.public.csv_ff;
+file_format = zero_to_snowflake.public.csv_ff;
 
 -- This stage will be used to upload your YAML files.
-CREATE OR REPLACE STAGE tb_101.semantic_layer.semantic_model_stage
+CREATE OR REPLACE STAGE zero_to_snowflake.semantic_layer.semantic_model_stage
   DIRECTORY = (ENABLE = TRUE)
   COMMENT = 'Internal stage for uploading Cortex Analyst semantic model YAML files.';
 
@@ -231,7 +231,7 @@ CREATE OR REPLACE STAGE tb_101.semantic_layer.semantic_model_stage
 --*/
 
 -- country table build
-CREATE OR REPLACE TABLE tb_101.raw_pos.country
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.country
 (
     country_id NUMBER(18,0),
     country VARCHAR(16777216),
@@ -243,7 +243,7 @@ CREATE OR REPLACE TABLE tb_101.raw_pos.country
 );
 
 -- franchise table build
-CREATE OR REPLACE TABLE tb_101.raw_pos.franchise 
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.franchise 
 (
     franchise_id NUMBER(38,0),
     first_name VARCHAR(16777216),
@@ -255,7 +255,7 @@ CREATE OR REPLACE TABLE tb_101.raw_pos.franchise
 );
 
 -- location table build
-CREATE OR REPLACE TABLE tb_101.raw_pos.location
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.location
 (
     location_id NUMBER(19,0),
     placekey VARCHAR(16777216),
@@ -267,7 +267,7 @@ CREATE OR REPLACE TABLE tb_101.raw_pos.location
 );
 
 -- menu table build
-CREATE OR REPLACE TABLE tb_101.raw_pos.menu
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.menu
 (
     menu_id NUMBER(19,0),
     menu_type_id NUMBER(38,0),
@@ -283,7 +283,7 @@ CREATE OR REPLACE TABLE tb_101.raw_pos.menu
 );
 
 -- truck table build 
-CREATE OR REPLACE TABLE tb_101.raw_pos.truck
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.truck
 (
     truck_id NUMBER(38,0),
     menu_type_id NUMBER(38,0),
@@ -302,7 +302,7 @@ CREATE OR REPLACE TABLE tb_101.raw_pos.truck
 );
 
 -- order_header table build
-CREATE OR REPLACE TABLE tb_101.raw_pos.order_header
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.order_header
 (
     order_id NUMBER(38,0),
     truck_id NUMBER(38,0),
@@ -323,7 +323,7 @@ CREATE OR REPLACE TABLE tb_101.raw_pos.order_header
 );
 
 -- order_detail table build
-CREATE OR REPLACE TABLE tb_101.raw_pos.order_detail 
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.order_detail 
 (
     order_detail_id NUMBER(38,0),
     order_id NUMBER(38,0),
@@ -337,7 +337,7 @@ CREATE OR REPLACE TABLE tb_101.raw_pos.order_detail
 );
 
 -- customer loyalty table build
-CREATE OR REPLACE TABLE tb_101.raw_customer.customer_loyalty
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_customer.customer_loyalty
 (
     customer_id NUMBER(38,0),
     first_name VARCHAR(16777216),
@@ -359,7 +359,7 @@ CREATE OR REPLACE TABLE tb_101.raw_customer.customer_loyalty
 /*--
  raw_suport zone table build 
 --*/
-CREATE OR REPLACE TABLE tb_101.raw_support.truck_reviews
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_support.truck_reviews
 (
     order_id NUMBER(38,0),
     language VARCHAR(16777216),
@@ -373,7 +373,7 @@ CREATE OR REPLACE TABLE tb_101.raw_support.truck_reviews
 --*/
 
 -- orders_v view
-CREATE OR REPLACE VIEW tb_101.harmonized.orders_v
+CREATE OR REPLACE VIEW zero_to_snowflake.harmonized.orders_v
     AS
 SELECT 
     oh.order_id,
@@ -408,22 +408,22 @@ SELECT
     oh.order_tax_amount,
     oh.order_discount_amount,
     oh.order_total
-FROM tb_101.raw_pos.order_detail od
-JOIN tb_101.raw_pos.order_header oh
+FROM zero_to_snowflake.raw_pos.order_detail od
+JOIN zero_to_snowflake.raw_pos.order_header oh
     ON od.order_id = oh.order_id
-JOIN tb_101.raw_pos.truck t
+JOIN zero_to_snowflake.raw_pos.truck t
     ON oh.truck_id = t.truck_id
-JOIN tb_101.raw_pos.menu m
+JOIN zero_to_snowflake.raw_pos.menu m
     ON od.menu_item_id = m.menu_item_id
-JOIN tb_101.raw_pos.franchise f
+JOIN zero_to_snowflake.raw_pos.franchise f
     ON t.franchise_id = f.franchise_id
-JOIN tb_101.raw_pos.location l
+JOIN zero_to_snowflake.raw_pos.location l
     ON oh.location_id = l.location_id
-LEFT JOIN tb_101.raw_customer.customer_loyalty cl
+LEFT JOIN zero_to_snowflake.raw_customer.customer_loyalty cl
     ON oh.customer_id = cl.customer_id;
 
 -- loyalty_metrics_v view
-CREATE OR REPLACE VIEW tb_101.harmonized.customer_loyalty_metrics_v
+CREATE OR REPLACE VIEW zero_to_snowflake.harmonized.customer_loyalty_metrics_v
     AS
 SELECT 
     cl.customer_id,
@@ -435,14 +435,14 @@ SELECT
     cl.e_mail,
     SUM(oh.order_total) AS total_sales,
     ARRAY_AGG(DISTINCT oh.location_id) AS visited_location_ids_array
-FROM tb_101.raw_customer.customer_loyalty cl
-JOIN tb_101.raw_pos.order_header oh
+FROM zero_to_snowflake.raw_customer.customer_loyalty cl
+JOIN zero_to_snowflake.raw_pos.order_header oh
 ON cl.customer_id = oh.customer_id
 GROUP BY cl.customer_id, cl.city, cl.country, cl.first_name,
 cl.last_name, cl.phone_number, cl.e_mail;
 
 -- truck_reviews_v view
-  CREATE OR REPLACE VIEW tb_101.harmonized.truck_reviews_v
+  CREATE OR REPLACE VIEW zero_to_snowflake.harmonized.truck_reviews_v
       AS
   SELECT DISTINCT
       r.review_id,
@@ -468,26 +468,26 @@ cl.last_name, cl.phone_number, cl.e_mail;
 --*/
 
 -- orders_v view
-CREATE OR REPLACE VIEW tb_101.analytics.orders_v
+CREATE OR REPLACE VIEW zero_to_snowflake.analytics.orders_v
 COMMENT = 'Tasty Bytes Order Detail View'
     AS
-SELECT DATE(o.order_ts) AS date, * FROM tb_101.harmonized.orders_v o;
+SELECT DATE(o.order_ts) AS date, * FROM zero_to_snowflake.harmonized.orders_v o;
 
 -- customer_loyalty_metrics_v view
-CREATE OR REPLACE VIEW tb_101.analytics.customer_loyalty_metrics_v
+CREATE OR REPLACE VIEW zero_to_snowflake.analytics.customer_loyalty_metrics_v
 COMMENT = 'Tasty Bytes Customer Loyalty Member Metrics View'
     AS
-SELECT * FROM tb_101.harmonized.customer_loyalty_metrics_v;
+SELECT * FROM zero_to_snowflake.harmonized.customer_loyalty_metrics_v;
 
 -- truck_reviews_v view
-CREATE OR REPLACE VIEW tb_101.analytics.truck_reviews_v 
+CREATE OR REPLACE VIEW zero_to_snowflake.analytics.truck_reviews_v 
     AS
 SELECT * FROM harmonized.truck_reviews_v;
 GRANT USAGE ON SCHEMA raw_support to ROLE tb_admin;
 GRANT SELECT ON TABLE raw_support.truck_reviews TO ROLE tb_admin;
 
 -- view for streamlit app
-CREATE OR REPLACE VIEW tb_101.analytics.japan_menu_item_sales_feb_2022
+CREATE OR REPLACE VIEW zero_to_snowflake.analytics.japan_menu_item_sales_feb_2022
 AS
 SELECT
     DISTINCT menu_item_name,
@@ -501,7 +501,7 @@ GROUP BY ALL
 ORDER BY date;
 
 -- Orders view for the Semantic Layer
-CREATE OR REPLACE VIEW tb_101.semantic_layer.orders_v
+CREATE OR REPLACE VIEW zero_to_snowflake.semantic_layer.orders_v
 AS
 SELECT * FROM (
     SELECT
@@ -523,12 +523,12 @@ SELECT * FROM (
         menu_item_name,
         quantity,
         order_total
-    FROM tb_101.harmonized.orders_v
+    FROM zero_to_snowflake.harmonized.orders_v
 )
 LIMIT 10000;
 
 -- Customer Loyalty Metrics view for the Semantic Layer
-CREATE OR REPLACE VIEW tb_101.semantic_layer.customer_loyalty_metrics_v
+CREATE OR REPLACE VIEW zero_to_snowflake.semantic_layer.customer_loyalty_metrics_v
 AS
 SELECT * FROM (
     SELECT
@@ -537,8 +537,8 @@ SELECT * FROM (
         cl.country,
         SUM(o.order_total) AS total_sales,
         ARRAY_AGG(DISTINCT o.location_id::VARCHAR) WITHIN GROUP (ORDER BY o.location_id::VARCHAR) AS visited_location_ids_array
-    FROM tb_101.harmonized.customer_loyalty_metrics_v AS cl
-    JOIN tb_101.harmonized.orders_v AS o
+    FROM zero_to_snowflake.harmonized.customer_loyalty_metrics_v AS cl
+    JOIN zero_to_snowflake.harmonized.orders_v AS o
         ON cl.customer_id = o.customer_id
     GROUP BY
         cl.customer_id,
@@ -554,50 +554,50 @@ LIMIT 10000;
 --*/
 
 -- truck_reviews table load
-COPY INTO tb_101.raw_support.truck_reviews
-FROM @tb_101.public.truck_reviews_s3load/raw_support/truck_reviews/;
+COPY INTO zero_to_snowflake.raw_support.truck_reviews
+FROM @zero_to_snowflake.public.truck_reviews_s3load/raw_support/truck_reviews/;
 
 -- country table load
-COPY INTO tb_101.raw_pos.country
-FROM @tb_101.public.s3load/raw_pos/country/;
+COPY INTO zero_to_snowflake.raw_pos.country
+FROM @zero_to_snowflake.public.s3load/raw_pos/country/;
 
 -- franchise table load
-COPY INTO tb_101.raw_pos.franchise
-FROM @tb_101.public.s3load/raw_pos/franchise/;
+COPY INTO zero_to_snowflake.raw_pos.franchise
+FROM @zero_to_snowflake.public.s3load/raw_pos/franchise/;
 
 -- location table load
-COPY INTO tb_101.raw_pos.location
-FROM @tb_101.public.s3load/raw_pos/location/;
+COPY INTO zero_to_snowflake.raw_pos.location
+FROM @zero_to_snowflake.public.s3load/raw_pos/location/;
 
 -- menu table load
-COPY INTO tb_101.raw_pos.menu
-FROM @tb_101.public.s3load/raw_pos/menu/;
+COPY INTO zero_to_snowflake.raw_pos.menu
+FROM @zero_to_snowflake.public.s3load/raw_pos/menu/;
 
 -- truck table load
-COPY INTO tb_101.raw_pos.truck
-FROM @tb_101.public.s3load/raw_pos/truck/;
+COPY INTO zero_to_snowflake.raw_pos.truck
+FROM @zero_to_snowflake.public.s3load/raw_pos/truck/;
 
 -- customer_loyalty table load
-COPY INTO tb_101.raw_customer.customer_loyalty
-FROM @tb_101.public.s3load/raw_customer/customer_loyalty/;
+COPY INTO zero_to_snowflake.raw_customer.customer_loyalty
+FROM @zero_to_snowflake.public.s3load/raw_customer/customer_loyalty/;
 
 -- order_header table load
-COPY INTO tb_101.raw_pos.order_header
-FROM @tb_101.public.s3load/raw_pos/order_header/;
+COPY INTO zero_to_snowflake.raw_pos.order_header
+FROM @zero_to_snowflake.public.s3load/raw_pos/order_header/;
 
 -- Setup truck details
 USE WAREHOUSE tb_de_wh;
 
 -- order_detail table load
-COPY INTO tb_101.raw_pos.order_detail
-FROM @tb_101.public.s3load/raw_pos/order_detail/;
+COPY INTO zero_to_snowflake.raw_pos.order_detail
+FROM @zero_to_snowflake.public.s3load/raw_pos/order_detail/;
 
 -- add truck_build column
-ALTER TABLE tb_101.raw_pos.truck
+ALTER TABLE zero_to_snowflake.raw_pos.truck
 ADD COLUMN truck_build OBJECT;
 
 -- construct an object from year, make, model and store on truck_build column
-UPDATE tb_101.raw_pos.truck
+UPDATE zero_to_snowflake.raw_pos.truck
     SET truck_build = OBJECT_CONSTRUCT(
         'year', year,
         'make', make,
@@ -605,7 +605,7 @@ UPDATE tb_101.raw_pos.truck
     );
 
 -- Messing up make data in truck_build object
-UPDATE tb_101.raw_pos.truck
+UPDATE zero_to_snowflake.raw_pos.truck
 SET truck_build = OBJECT_INSERT(
     truck_build,
     'make',
@@ -618,13 +618,13 @@ WHERE
     truck_id % 2 = 0;
 
 -- truck_details table build 
-CREATE OR REPLACE TABLE tb_101.raw_pos.truck_details
+CREATE OR REPLACE TABLE zero_to_snowflake.raw_pos.truck_details
 AS 
 SELECT * EXCLUDE (year, make, model)
-FROM tb_101.raw_pos.truck;
+FROM zero_to_snowflake.raw_pos.truck;
 
 -- Create or replace the Cortex Search Service named 'tasty_bytes_review_search'. --
-CREATE OR REPLACE CORTEX SEARCH SERVICE tb_101.harmonized.tasty_bytes_review_search
+CREATE OR REPLACE CORTEX SEARCH SERVICE zero_to_snowflake.harmonized.tasty_bytes_review_search
 ON REVIEW 
 ATTRIBUTES LANGUAGE, ORDER_ID, REVIEW_ID, TRUCK_BRAND_NAME, PRIMARY_CITY, DATE, SOURCE 
 WAREHOUSE = tb_de_wh
@@ -640,14 +640,14 @@ AS (
         DATE,               
         SOURCE             
     FROM
-        tb_101.harmonized.truck_reviews_v 
+        zero_to_snowflake.harmonized.truck_reviews_v 
     WHERE
         REVIEW IS NOT NULL 
 );
 
 USE ROLE securityadmin;
 -- Additional Grants on semantic layer
-GRANT SELECT ON VIEW tb_101.semantic_layer.orders_v TO ROLE PUBLIC;
-GRANT SELECT ON VIEW tb_101.semantic_layer.customer_loyalty_metrics_v TO ROLE PUBLIC;
-GRANT READ ON STAGE tb_101.semantic_layer.semantic_model_stage TO ROLE tb_admin;
-GRANT WRITE ON STAGE tb_101.semantic_layer.semantic_model_stage TO ROLE tb_admin;
+GRANT SELECT ON VIEW zero_to_snowflake.semantic_layer.orders_v TO ROLE PUBLIC;
+GRANT SELECT ON VIEW zero_to_snowflake.semantic_layer.customer_loyalty_metrics_v TO ROLE PUBLIC;
+GRANT READ ON STAGE zero_to_snowflake.semantic_layer.semantic_model_stage TO ROLE tb_admin;
+GRANT WRITE ON STAGE zero_to_snowflake.semantic_layer.semantic_model_stage TO ROLE tb_admin;
