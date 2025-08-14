@@ -13,12 +13,12 @@ Apps & Collaboration
 ****************************************************************************************************/
 
 -- First, set the session query tag
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "apps_and_collaboration"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "apps_and_collaboration"}}';
 
 -- Now, set the Worksheet context
 USE DATABASE zero_to_snowflake;
 USE ROLE accountadmin;
-USE WAREHOUSE tb_de_wh;
+USE WAREHOUSE zts_de_wh;
 
 /*  1. Acquiring weather data from Snowflake Marketplace
     ***********************************************************
@@ -49,7 +49,7 @@ USE WAREHOUSE tb_de_wh;
 */
 
 -- Switch to the analyst role
-USE ROLE tb_analyst;
+USE ROLE zts_analyst;
 
 /*  2. Integrating Account Data with Weather Source Data
 
@@ -269,4 +269,4 @@ DROP VIEW IF EXISTS harmonized.tastybytes_poi_v;
 -- Unset Query Tag
 ALTER SESSION UNSET query_tag;
 -- Suspend the warehouse
-ALTER WAREHOUSE tb_de_wh SUSPEND;
+ALTER WAREHOUSE zts_de_wh SUSPEND;

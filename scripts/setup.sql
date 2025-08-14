@@ -7,14 +7,15 @@ Copyright(c): 2025 Snowflake Inc. All rights reserved.
 USE ROLE sysadmin;
 
 -- assign Query Tag to Session 
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"sql", "vignette": "setup"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"sql", "vignette": "setup"}}';
 
 /*--
  • database, schema and warehouse creation
 --*/
 
 -- create zero_to_snowflake database
-CREATE OR REPLACE DATABASE zero_to_snowflake;
+CREATE OR REPLACE DATABASE zero_to_snowflake
+    COMMENT = 'Zero To Snowflake Database - August 2025';
 
 -- create raw_pos schema
 CREATE OR REPLACE SCHEMA zero_to_snowflake.raw_pos;
@@ -39,7 +40,7 @@ CREATE OR REPLACE SCHEMA zero_to_snowflake.semantic_layer
 COMMENT = 'Schema for the business-friendly semantic layer, optimized for analytical consumption.';
 
 -- create warehouses
-CREATE OR REPLACE WAREHOUSE tb_de_wh
+CREATE OR REPLACE WAREHOUSE zts_de_wh
     WAREHOUSE_SIZE = 'large' -- Large for initial data load - scaled down to XSmall at end of this scripts
     WAREHOUSE_TYPE = 'standard'
     AUTO_SUSPEND = 60
@@ -47,7 +48,7 @@ CREATE OR REPLACE WAREHOUSE tb_de_wh
     INITIALLY_SUSPENDED = TRUE
 COMMENT = 'data engineering warehouse for tasty bytes';
 
-CREATE OR REPLACE WAREHOUSE tb_dev_wh
+CREATE OR REPLACE WAREHOUSE zts_dev_wh
     WAREHOUSE_SIZE = 'xsmall'
     WAREHOUSE_TYPE = 'standard'
     AUTO_SUSPEND = 60
@@ -56,7 +57,7 @@ CREATE OR REPLACE WAREHOUSE tb_dev_wh
 COMMENT = 'developer warehouse for tasty bytes';
 
 -- create analyst warehouse
-CREATE OR REPLACE WAREHOUSE tb_analyst_wh
+CREATE OR REPLACE WAREHOUSE zts_analyst_wh
     COMMENT = 'TastyBytes Analyst Warehouse'
     WAREHOUSE_TYPE = 'standard'
     WAREHOUSE_SIZE = 'large'
@@ -68,7 +69,7 @@ CREATE OR REPLACE WAREHOUSE tb_analyst_wh
     AUTO_RESUME = true;
 
 -- Create a dedicated large warehouse for analytical workloads
-CREATE OR REPLACE WAREHOUSE tb_cortex_wh
+CREATE OR REPLACE WAREHOUSE zts_cortex_wh
     WAREHOUSE_SIZE = 'LARGE'
     WAREHOUSE_TYPE = 'STANDARD'
     AUTO_SUSPEND = 60
@@ -80,119 +81,119 @@ COMMENT = 'Dedicated large warehouse for Cortex Analyst and other analytical too
 USE ROLE securityadmin;
 
 -- functional roles
-CREATE ROLE IF NOT EXISTS tb_admin
+CREATE ROLE IF NOT EXISTS zts_admin
     COMMENT = 'admin for tasty bytes';
     
-CREATE ROLE IF NOT EXISTS tb_data_engineer
+CREATE ROLE IF NOT EXISTS zts_data_engineer
     COMMENT = 'data engineer for tasty bytes';
     
-CREATE ROLE IF NOT EXISTS tb_dev
+CREATE ROLE IF NOT EXISTS zts_dev
     COMMENT = 'developer for tasty bytes';
     
-CREATE ROLE IF NOT EXISTS tb_analyst
+CREATE ROLE IF NOT EXISTS zts_analyst
     COMMENT = 'analyst for tasty bytes';
     
 -- role hierarchy
-GRANT ROLE tb_admin TO ROLE sysadmin;
-GRANT ROLE tb_data_engineer TO ROLE tb_admin;
-GRANT ROLE tb_dev TO ROLE tb_data_engineer;
-GRANT ROLE tb_analyst TO ROLE tb_data_engineer;
+GRANT ROLE zts_admin TO ROLE sysadmin;
+GRANT ROLE zts_data_engineer TO ROLE zts_admin;
+GRANT ROLE zts_dev TO ROLE zts_data_engineer;
+GRANT ROLE zts_analyst TO ROLE zts_data_engineer;
 
 -- privilege grants
 USE ROLE accountadmin;
 
-GRANT IMPORTED PRIVILEGES ON DATABASE snowflake TO ROLE tb_data_engineer;
+GRANT IMPORTED PRIVILEGES ON DATABASE snowflake TO ROLE zts_data_engineer;
 
-GRANT CREATE WAREHOUSE ON ACCOUNT TO ROLE tb_admin;
+GRANT CREATE WAREHOUSE ON ACCOUNT TO ROLE zts_admin;
 
 USE ROLE securityadmin;
 
-GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_admin;
-GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_data_engineer;
-GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_dev;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE zts_admin;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE zts_data_engineer;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE zts_dev;
 
-GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_admin;
-GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_data_engineer;
-GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_dev;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE zts_admin;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE zts_data_engineer;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE zts_dev;
 
-GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE tb_admin;
-GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE zts_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE zts_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_support TO ROLE zts_dev;
 
-GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_admin;
-GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE zts_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE zts_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.raw_pos TO ROLE zts_dev;
 
-GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE tb_admin;
-GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE zts_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE zts_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.harmonized TO ROLE zts_dev;
 
-GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE tb_admin;
-GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE zts_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE zts_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.analytics TO ROLE zts_dev;
 
-GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE tb_admin;
-GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE zts_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE zts_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.governance TO ROLE zts_dev;
 
-GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_admin;
-GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_data_engineer;
-GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_dev;
+GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE zts_admin;
+GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE zts_data_engineer;
+GRANT ALL ON SCHEMA zero_to_snowflake.semantic_layer TO ROLE zts_dev;
 
 -- warehouse grants
-GRANT OWNERSHIP ON WAREHOUSE tb_de_wh TO ROLE tb_admin COPY CURRENT GRANTS;
-GRANT ALL ON WAREHOUSE tb_de_wh TO ROLE tb_admin;
-GRANT ALL ON WAREHOUSE tb_de_wh TO ROLE tb_data_engineer;
+GRANT OWNERSHIP ON WAREHOUSE zts_de_wh TO ROLE zts_admin COPY CURRENT GRANTS;
+GRANT ALL ON WAREHOUSE zts_de_wh TO ROLE zts_admin;
+GRANT ALL ON WAREHOUSE zts_de_wh TO ROLE zts_data_engineer;
 
-GRANT ALL ON WAREHOUSE tb_dev_wh TO ROLE tb_admin;
-GRANT ALL ON WAREHOUSE tb_dev_wh TO ROLE tb_data_engineer;
-GRANT ALL ON WAREHOUSE tb_dev_wh TO ROLE tb_dev;
+GRANT ALL ON WAREHOUSE zts_dev_wh TO ROLE zts_admin;
+GRANT ALL ON WAREHOUSE zts_dev_wh TO ROLE zts_data_engineer;
+GRANT ALL ON WAREHOUSE zts_dev_wh TO ROLE zts_dev;
 
-GRANT ALL ON WAREHOUSE tb_analyst_wh TO ROLE tb_admin;
-GRANT ALL ON WAREHOUSE tb_analyst_wh TO ROLE tb_data_engineer;
-GRANT ALL ON WAREHOUSE tb_analyst_wh TO ROLE tb_dev;
+GRANT ALL ON WAREHOUSE zts_analyst_wh TO ROLE zts_admin;
+GRANT ALL ON WAREHOUSE zts_analyst_wh TO ROLE zts_data_engineer;
+GRANT ALL ON WAREHOUSE zts_analyst_wh TO ROLE zts_dev;
 
-GRANT ALL ON WAREHOUSE tb_cortex_wh TO ROLE tb_admin;
-GRANT ALL ON WAREHOUSE tb_cortex_wh TO ROLE tb_data_engineer;
-GRANT ALL ON WAREHOUSE tb_cortex_wh TO ROLE tb_dev;
+GRANT ALL ON WAREHOUSE zts_cortex_wh TO ROLE zts_admin;
+GRANT ALL ON WAREHOUSE zts_cortex_wh TO ROLE zts_data_engineer;
+GRANT ALL ON WAREHOUSE zts_cortex_wh TO ROLE zts_dev;
 
 -- future grants
-GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_admin;
-GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE tb_dev;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE zts_admin;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE zts_data_engineer;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_pos TO ROLE zts_dev;
 
-GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE tb_admin;
-GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE tb_dev;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE zts_admin;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE zts_data_engineer;
+GRANT ALL ON FUTURE TABLES IN SCHEMA zero_to_snowflake.raw_customer TO ROLE zts_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE zts_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE zts_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.harmonized TO ROLE zts_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE zts_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE zts_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.analytics TO ROLE zts_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE zts_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE zts_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.governance TO ROLE zts_dev;
 
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_admin;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_data_engineer;
-GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE tb_dev;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE zts_admin;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE zts_data_engineer;
+GRANT ALL ON FUTURE VIEWS IN SCHEMA zero_to_snowflake.semantic_layer TO ROLE zts_dev;
 
 -- Apply Masking Policy Grants
 USE ROLE accountadmin;
-GRANT APPLY MASKING POLICY ON ACCOUNT TO ROLE tb_admin;
-GRANT APPLY MASKING POLICY ON ACCOUNT TO ROLE tb_data_engineer;
+GRANT APPLY MASKING POLICY ON ACCOUNT TO ROLE zts_admin;
+GRANT APPLY MASKING POLICY ON ACCOUNT TO ROLE zts_data_engineer;
   
--- Grants for tb_admin
-GRANT EXECUTE DATA METRIC FUNCTION ON ACCOUNT TO ROLE tb_admin;
+-- Grants for zts_admin
+GRANT EXECUTE DATA METRIC FUNCTION ON ACCOUNT TO ROLE zts_admin;
 
--- Grants for tb_analyst
-GRANT ALL ON SCHEMA harmonized TO ROLE tb_analyst;
-GRANT ALL ON SCHEMA analytics TO ROLE tb_analyst;
-GRANT OPERATE, USAGE ON WAREHOUSE tb_analyst_wh TO ROLE tb_analyst;
+-- Grants for zts_analyst
+GRANT ALL ON SCHEMA harmonized TO ROLE zts_analyst;
+GRANT ALL ON SCHEMA analytics TO ROLE zts_analyst;
+GRANT OPERATE, USAGE ON WAREHOUSE zts_analyst_wh TO ROLE zts_analyst;
 
 -- Grants for cortex search service
 GRANT DATABASE ROLE SNOWFLAKE.CORTEX_USER TO ROLE TB_DEV;
@@ -202,7 +203,7 @@ GRANT USAGE ON WAREHOUSE TB_DE_WH TO ROLE TB_DEV;
 
 -- raw_pos table build
 USE ROLE sysadmin;
-USE WAREHOUSE tb_de_wh;
+USE WAREHOUSE zts_de_wh;
 
 /*--
  • file format and stage creation
@@ -483,8 +484,8 @@ SELECT * FROM zero_to_snowflake.harmonized.customer_loyalty_metrics_v;
 CREATE OR REPLACE VIEW zero_to_snowflake.analytics.truck_reviews_v 
     AS
 SELECT * FROM harmonized.truck_reviews_v;
-GRANT USAGE ON SCHEMA raw_support to ROLE tb_admin;
-GRANT SELECT ON TABLE raw_support.truck_reviews TO ROLE tb_admin;
+GRANT USAGE ON SCHEMA raw_support to ROLE zts_admin;
+GRANT SELECT ON TABLE raw_support.truck_reviews TO ROLE zts_admin;
 
 -- view for streamlit app
 CREATE OR REPLACE VIEW zero_to_snowflake.analytics.japan_menu_item_sales_feb_2022
@@ -586,7 +587,7 @@ COPY INTO zero_to_snowflake.raw_pos.order_header
 FROM @zero_to_snowflake.public.s3load/raw_pos/order_header/;
 
 -- Setup truck details
-USE WAREHOUSE tb_de_wh;
+USE WAREHOUSE zts_de_wh;
 
 -- order_detail table load
 COPY INTO zero_to_snowflake.raw_pos.order_detail
@@ -627,7 +628,7 @@ FROM zero_to_snowflake.raw_pos.truck;
 CREATE OR REPLACE CORTEX SEARCH SERVICE zero_to_snowflake.harmonized.tasty_bytes_review_search
 ON REVIEW 
 ATTRIBUTES LANGUAGE, ORDER_ID, REVIEW_ID, TRUCK_BRAND_NAME, PRIMARY_CITY, DATE, SOURCE 
-WAREHOUSE = tb_de_wh
+WAREHOUSE = zts_de_wh
 TARGET_LAG = '1 hour' 
 AS (
     SELECT
@@ -649,5 +650,5 @@ USE ROLE securityadmin;
 -- Additional Grants on semantic layer
 GRANT SELECT ON VIEW zero_to_snowflake.semantic_layer.orders_v TO ROLE PUBLIC;
 GRANT SELECT ON VIEW zero_to_snowflake.semantic_layer.customer_loyalty_metrics_v TO ROLE PUBLIC;
-GRANT READ ON STAGE zero_to_snowflake.semantic_layer.semantic_model_stage TO ROLE tb_admin;
-GRANT WRITE ON STAGE zero_to_snowflake.semantic_layer.semantic_model_stage TO ROLE tb_admin;
+GRANT READ ON STAGE zero_to_snowflake.semantic_layer.semantic_model_stage TO ROLE zts_admin;
+GRANT WRITE ON STAGE zero_to_snowflake.semantic_layer.semantic_model_stage TO ROLE zts_admin;

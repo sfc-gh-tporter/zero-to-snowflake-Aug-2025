@@ -13,15 +13,15 @@ Simple Data Pipeline
 
 ****************************************************************************************************/
 
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "data_pipeline"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "data_pipeline"}}';
 
 /*
     We will assume the role of a TastyBytes data engineer with the intention of creating a data pipeline with raw menu data,
     so let's set our context appropriately.
 */
 USE DATABASE zero_to_snowflake;
-USE ROLE tb_data_engineer;
-USE WAREHOUSE tb_de_wh;
+USE ROLE zts_data_engineer;
+USE WAREHOUSE zts_de_wh;
 
 /*  1. Ingestion from External stage
     ***************************************************************
@@ -359,4 +359,4 @@ WHERE order_id = 459520441;
 -- Unset Query Tag
 ALTER SESSION UNSET query_tag;
 -- Suspend warehouse
-ALTER WAREHOUSE tb_de_wh SUSPEND;
+ALTER WAREHOUSE zts_de_wh SUSPEND;

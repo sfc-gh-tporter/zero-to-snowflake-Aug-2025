@@ -15,12 +15,12 @@ Governance with Horizon
 ****************************************************************************************************/
 
 -- Set the session query tag
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "governance_with_horizon"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "governance_with_horizon"}}';
 
 -- First, let's set our Worksheet context
 USE ROLE useradmin;
 USE DATABASE zero_to_snowflake;
-USE WAREHOUSE tb_dev_wh;
+USE WAREHOUSE zts_dev_wh;
 
 /*  1. Introduction to Roles and Access Control    
     *************************************************************************
@@ -84,7 +84,7 @@ USE WAREHOUSE tb_dev_wh;
 SHOW ROLES;
 
 -- Now we'll create our data steward role.
-CREATE OR REPLACE ROLE tb_data_steward
+CREATE OR REPLACE ROLE zts_data_steward
     COMMENT = 'Custom Role';
 -- With the role created we can switch to the SECURITYADMIN role and grant privileges to our new role.
 
@@ -106,8 +106,8 @@ CREATE OR REPLACE ROLE tb_data_steward
       First, switch to the SECURITYADMIN role.
 */
 USE ROLE securityadmin;
--- First, we'll grant the role the ability to use warehouse tb_dev_wh
-GRANT OPERATE, USAGE ON WAREHOUSE tb_dev_wh TO ROLE tb_data_steward;
+-- First, we'll grant the role the ability to use warehouse zts_dev_wh
+GRANT OPERATE, USAGE ON WAREHOUSE zts_dev_wh TO ROLE zts_data_steward;
 
 /*
      Next, let's understand Snowflake Database and Schema Grants:
@@ -119,8 +119,8 @@ GRANT OPERATE, USAGE ON WAREHOUSE tb_dev_wh TO ROLE tb_data_steward;
       - ALL: Grants all privileges, except OWNERSHIP, on a database.
 */
 
-GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE tb_data_steward;
-GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_data_steward;
+GRANT USAGE ON DATABASE zero_to_snowflake TO ROLE zts_data_steward;
+GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE zts_data_steward;
 
 /*
     Access to data within Snowflake tables and views is managed through the following privileges:
@@ -134,24 +134,24 @@ GRANT USAGE ON ALL SCHEMAS IN DATABASE zero_to_snowflake TO ROLE tb_data_steward
 */
 
 -- Grant SELECT privileges on all tables in the RAW_CUSTOMER schema
-GRANT SELECT ON ALL TABLES IN SCHEMA raw_customer TO ROLE tb_data_steward;
+GRANT SELECT ON ALL TABLES IN SCHEMA raw_customer TO ROLE zts_data_steward;
 -- Grant ALL privileges on the governance schema and all tables in the governance schema. 
-GRANT ALL ON SCHEMA governance TO ROLE tb_data_steward;
-GRANT ALL ON ALL TABLES IN SCHEMA governance TO ROLE tb_data_steward;
+GRANT ALL ON SCHEMA governance TO ROLE zts_data_steward;
+GRANT ALL ON ALL TABLES IN SCHEMA governance TO ROLE zts_data_steward;
 
 /*
     In order to use our new role, we also need to grant the role to the current user. Run the next two queries 
     to grant the current user the privilege to use the new data steward role.
 */
 SET my_user = CURRENT_USER();
-GRANT ROLE tb_data_steward TO USER IDENTIFIER($my_user);
+GRANT ROLE zts_data_steward TO USER IDENTIFIER($my_user);
 
 /*
     Finally, run the query below use our newly created role!
     --> Alternatively, you can also use the role by clicking the 'Select role and warehouse' button in the 
-        Worksheet UI, then selecting 'tb_data_steward'.
+        Worksheet UI, then selecting 'zts_data_steward'.
 */
-USE ROLE tb_data_steward;
+USE ROLE zts_data_steward;
 
 -- To celebrate let's get an idea of the type of data we're going to be working with.
 SELECT TOP 100 * FROM raw_customer.customer_loyalty;
@@ -187,25 +187,25 @@ USE ROLE accountadmin;
     apply the tag on database objects.
 */
 CREATE OR REPLACE TAG governance.pii;
-GRANT APPLY TAG ON ACCOUNT TO ROLE tb_data_steward;
+GRANT APPLY TAG ON ACCOUNT TO ROLE zts_data_steward;
 
 /*
-    First we need to grant our role tb_data_steward the appropriate privileges to execute data classifications and 
+    First we need to grant our role zts_data_steward the appropriate privileges to execute data classifications and 
     create classification profiles on our raw_customer schema.
 */
-GRANT EXECUTE AUTO CLASSIFICATION ON SCHEMA raw_customer TO ROLE tb_data_steward;
-GRANT DATABASE ROLE SNOWFLAKE.CLASSIFICATION_ADMIN TO ROLE tb_data_steward;
-GRANT CREATE SNOWFLAKE.DATA_PRIVACY.CLASSIFICATION_PROFILE ON SCHEMA governance TO ROLE tb_data_steward;
+GRANT EXECUTE AUTO CLASSIFICATION ON SCHEMA raw_customer TO ROLE zts_data_steward;
+GRANT DATABASE ROLE SNOWFLAKE.CLASSIFICATION_ADMIN TO ROLE zts_data_steward;
+GRANT CREATE SNOWFLAKE.DATA_PRIVACY.CLASSIFICATION_PROFILE ON SCHEMA governance TO ROLE zts_data_steward;
 
 -- Switch back to the data steward role.
-USE ROLE tb_data_steward;
+USE ROLE zts_data_steward;
 
 /*
     Create the classification profile. Objects added to the schema are classified immediately, valid for 30 days
     and are tagged automatically.
 */
 CREATE OR REPLACE SNOWFLAKE.DATA_PRIVACY.CLASSIFICATION_PROFILE
-  governance.tb_classification_profile(
+  governance.zts_classification_profile(
     {
       'minimum_object_age_for_classification_days': 0,
       'maximum_classification_validity_days': 30,
@@ -216,7 +216,7 @@ CREATE OR REPLACE SNOWFLAKE.DATA_PRIVACY.CLASSIFICATION_PROFILE
     Create a tag map to automatically tag columns given the specified semantic categories. This means any column 
     classified with any of the values in the semantic_categories array will be automatically tagged with the PII tag.
 */
-CALL governance.tb_classification_profile!SET_TAG_MAP(
+CALL governance.zts_classification_profile!SET_TAG_MAP(
   {'column_tag_map':[
     {
       'tag_name':'zero_to_snowflake.governance.pii',
@@ -225,7 +225,7 @@ CALL governance.tb_classification_profile!SET_TAG_MAP(
     }]});
 
 -- Now call SYSTEM$CLASSIFY to automatically classify the customer_loyalty table with our classification profile.
-CALL SYSTEM$CLASSIFY('zero_to_snowflake.raw_customer.customer_loyalty', 'zero_to_snowflake.governance.tb_classification_profile');
+CALL SYSTEM$CLASSIFY('zero_to_snowflake.raw_customer.customer_loyalty', 'zero_to_snowflake.governance.zts_classification_profile');
 
 /*
     Run the next query to see the results of the auto classification and tagging. We'll pull metadata from the 
@@ -301,7 +301,7 @@ USE ROLE public;
 SELECT TOP 100 * FROM raw_customer.customer_loyalty;
 
 -- Now, switch to the TB_ADMIN role to observe the masking policy is not applied to admin roles
-USE ROLE tb_admin;
+USE ROLE zts_admin;
 SELECT TOP 100 * FROM raw_customer.customer_loyalty;
 
 /*  4. Row Level Security with Row Access Policies
@@ -319,7 +319,7 @@ SELECT TOP 100 * FROM raw_customer.customer_loyalty;
 
     First, let's switch our role to our data steward role.
 */
-USE ROLE tb_data_steward;
+USE ROLE zts_data_steward;
 
 -- Before creating the row access policy, we'll create a row policy map.
 CREATE OR REPLACE TABLE governance.row_policy_map
@@ -327,11 +327,11 @@ CREATE OR REPLACE TABLE governance.row_policy_map
 
 /*
     The row policy map associates roles with the allowed access row value.
-    For example, if we associate our role tb_data_engineer with the country value 'United States', 
-    tb_data_engineer will only see rows where the country value is 'United States'.
+    For example, if we associate our role zts_data_engineer with the country value 'United States', 
+    zts_data_engineer will only see rows where the country value is 'United States'.
 */
 INSERT INTO governance.row_policy_map
-    VALUES('tb_data_engineer', 'United States');
+    VALUES('zts_data_engineer', 'United States');
 
 /*
     With the row policy map in place, we'll create the Row Access Policy. 
@@ -359,7 +359,7 @@ ALTER TABLE raw_customer.customer_loyalty
     Now, switch to the role we associated with 'United States' in the row policy map and observe the outcome of 
     querying a table with our row access policy.
 */
-USE ROLE tb_data_engineer;
+USE ROLE zts_data_engineer;
 
 -- We should only see customers from the United States. 
 SELECT TOP 100 * FROM raw_customer.customer_loyalty;
@@ -388,7 +388,7 @@ SELECT TOP 100 * FROM raw_customer.customer_loyalty;
 */
 
 -- Now switch back to the TastyBytes data steward role to begin using DMFs
-USE ROLE tb_data_steward;
+USE ROLE zts_data_steward;
 
 -- This will return the percentage of null customer IDs from the order header table.
 SELECT SNOWFLAKE.CORE.NULL_PERCENT(SELECT customer_id FROM raw_pos.order_header);
@@ -469,8 +469,8 @@ ALTER TABLE raw_pos.order_detail
     the Trust Center.
 */
 USE ROLE accountadmin;
-GRANT APPLICATION ROLE SNOWFLAKE.TRUST_CENTER_ADMIN TO ROLE tb_admin;
-USE ROLE tb_admin; -- Switch back to the TastyBytes admin role
+GRANT APPLICATION ROLE SNOWFLAKE.TRUST_CENTER_ADMIN TO ROLE zts_admin;
+USE ROLE zts_admin; -- Switch back to the TastyBytes admin role
 
 /*
     We can get to the Trust Center by clicking the 'Monitoring' button in the Navigation Menu, then 
@@ -532,7 +532,7 @@ USE ROLE tb_admin; -- Switch back to the TastyBytes admin role
 USE ROLE accountadmin;
 
 -- Drop data steward role
-DROP ROLE IF EXISTS tb_data_steward;
+DROP ROLE IF EXISTS zts_data_steward;
 
 -- Masking Policy
 ALTER TAG IF EXISTS governance.pii UNSET
@@ -543,7 +543,7 @@ DROP MASKING POLICY IF EXISTS governance.mask_date_pii;
 
 -- Auto classification
 ALTER SCHEMA raw_customer UNSET CLASSIFICATION_PROFILE;
-DROP SNOWFLAKE.DATA_PRIVACY.CLASSIFICATION_PROFILE IF EXISTS tb_classification_profile;
+DROP SNOWFLAKE.DATA_PRIVACY.CLASSIFICATION_PROFILE IF EXISTS zts_classification_profile;
 
 -- row access policies
 ALTER TABLE raw_customer.customer_loyalty 
@@ -575,4 +575,4 @@ ALTER TABLE raw_customer.customer_loyalty
 DROP TAG IF EXISTS governance.pii;
 -- Unset Query Tag
 ALTER SESSION UNSET query_tag;
-ALTER WAREHOUSE tb_dev_wh SUSPEND;
+ALTER WAREHOUSE zts_dev_wh SUSPEND;

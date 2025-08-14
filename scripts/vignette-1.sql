@@ -16,7 +16,7 @@ Getting Started with Snowflake
 ****************************************************************************************************/
 
 -- Before we start, run this query to set the session query tag.
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "getting_started_with_snowflake"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "getting_started_with_snowflake"}}';
 
 -- We'll begin by setting our Worksheet context. We will set our database, schema and role.
 
@@ -395,8 +395,8 @@ CREATE OR REPLACE SNOWFLAKE.CORE.BUDGET my_budget()
     - Click the first item 'Cost Management'
     - Click the 'Budgets' tab
     
-    If prompted to select a warehouse, select tb_dev_wh, otherwise, ensure your warehouse is set to 
-    tb_dev_wh from the warehouse panel at the top right of the screen.
+    If prompted to select a warehouse, select zts_dev_wh, otherwise, ensure your warehouse is set to 
+    zts_dev_wh from the warehouse panel at the top right of the screen.
     
     On the budgets page we see metrics about our spend for the current period.
     In the middle of the screen shows a graph of the current spend with forecasted spend.

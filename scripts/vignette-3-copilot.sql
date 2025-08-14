@@ -4,7 +4,7 @@ Version:      v1
 Copyright(c): 2025 Snowflake Inc. All rights reserved.
 ****************************************************************************************************/
 
-ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "snowflake_copilot"}}';
+ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"zts","version":{"major":1, "minor":1},"attributes":{"is_quickstart":1, "source":"tastybytes", "vignette": "snowflake_copilot"}}';
 
 /*
     We will assume the role of a TastyBytes data analyst with the intention of leveraging Snowflake Copilot 
@@ -17,8 +17,8 @@ ALTER SESSION SET query_tag = '{"origin":"sf_sit-is","name":"tb_zts","version":{
     ***************************************************************/
 
 -- before we start, we will set our context
-USE ROLE tb_analyst;
-USE WAREHOUSE tb_analyst_wh;
+USE ROLE zts_analyst;
+USE WAREHOUSE zts_analyst_wh;
 USE DATABASE zero_to_snowflake;
 USE SCHEMA harmonized;
 
